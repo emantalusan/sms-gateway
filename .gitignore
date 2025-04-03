@@ -175,3 +175,5 @@ cython_debug/
 config.json
 app.beta*
 *.db
+*.mct
+*.rdm

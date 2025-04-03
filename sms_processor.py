@@ -141,7 +141,7 @@ class SMSProcessor:
             if isinstance(message, list):
                 message = message[0]
             if 'encap' in message.lower():
-                message = f"Sender: {sms.number}, Time: {sms.time.isoformat()}, Modem: {modem_name}, Message: {sms.text}"
+                message = f"Sender: {sms.number}@{modem_name}\nTime: {sms.time.isoformat()}\nMessage:\n{sms.text}"
             
             action = rule.get('action', ['reply'])[0].lower()
             queues = rule.get('queue', [modem_name])
@@ -176,11 +176,8 @@ class SMSProcessor:
                     else:
                         self.logger.warning(f"Rule {rule_name}: Queue {queue_name} not found")
             else:
-                self.logger.warning(f"Rule {rule_name}: Unknown action {action}, defaulting to reply")
-                for queue_name in queues:
-                    if queue_name in self.modem_handlers:
-                        self.modem_handlers[queue_name].send_sms(sms.number, message)
-                        self.logger.info(f"Rule {rule_name}: Replied to {sms.number} from {queue_name} with message: {message}")
+                self.logger.warning(f"Rule {rule_name}: Unknown action {action}, ignoring.")
+
 
     def cleanup_old_multipart(self):
         with sqlite3.connect(self.db_manager.db_file) as conn:

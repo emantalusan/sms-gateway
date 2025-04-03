@@ -176,8 +176,8 @@ WorkingDirectory=$INSTALL_DIR
 User=$USER
 Group=$USER
 Restart=always
-StandardOutput=append:$LOG_DIR/sms-gateway.log
-StandardError=append:$LOG_DIR/sms-gateway.log
+#StandardOutput=append:$LOG_DIR/sms-gateway.log
+#StandardError=append:$LOG_DIR/sms-gateway.log
 
 [Install]
 WantedBy=multi-user.target
